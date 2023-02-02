@@ -27,7 +27,7 @@ Companies = ['Xiaomi','Viva BioTech']
 
 
 #effortless caching: relieve long-running computation in your code for continuously updating
-@st.cache
+@st.cache(ignore_hash=True)
 def load_fdata(data):
     data = pd.read_csv(data)
     data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
