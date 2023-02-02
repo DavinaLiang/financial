@@ -69,7 +69,7 @@ csvfiles2 = glob.glob(os.path.join(mydir2, '*.csv'))
 df_dict2 = dict()
 for file in csvfiles2:
     df_dict2[file.split('/')[2].split('.')[0]] = load_fdata(file)
-st.write(df_dict2)
+
 
 option = st.selectbox(
      'Choose one company to visualize',
