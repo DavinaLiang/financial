@@ -23,7 +23,7 @@ st.markdown('##### These 2 charts are used to assess the operating condition of 
 space(2)
 ###############data preparation
 DATE_COLUMN = 'Date'
-Companies = ['Jiaotong','Xiaomi','Yongan']
+Companies = ['Xiaomi','Viva BioTech']
 
 
 #effortless caching: relieve long-running computation in your code for continuously updating
