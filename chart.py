@@ -16,9 +16,10 @@ def space(num_lines=1):
 
 st.set_page_config(layout="wide",page_icon="💰",page_title="How Finance Works")
 #add a title
+st.image('header.png')
 st.title('Financial Analysis')
 space(1)
-#st.image('photo1.jpeg')
+
 st.markdown('##### These 2 charts are used to assess the operating condition of the chosen company ')
 space(2)
 ###############data preparation
