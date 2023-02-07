@@ -20,7 +20,7 @@ st.image('header.png')
 st.title('Financial Analysis')
 space(1)
 
-st.markdown('##### These 2 charts are used to assess the operating condition of the chosen company ')
+st.markdown('### Visualizing historical key factors of the corpartion helps us to understand how are the companies doing overtime, what is their overall market power towards their clients and service providers, and have a sense of their financial stories ')
 space(2)
 ###############data preparation
 DATE_COLUMN = 'Date'
