@@ -20,7 +20,7 @@ st.image('header.png')
 #st.title('Financial Analysis')
 space(1)
 
-st.markdown('#### Visualizing historical key factors of the corpartion helps us to understand how are the companies doing overtime, what is their overall market power towards their clients and service providers, and have a sense of their financial stories ')
+st.markdown('#### Visualizing historical key factors of the corpartion helps us to understand how are the companies doing overtime, what is their :blue[overall market power] towards their _clients_ and _service_ _providers_, and have a sense of their :red[financial stories] ')
 space(2)
 ###############data preparation
 DATE_COLUMN = 'Date'
@@ -80,11 +80,11 @@ data2 = df_dict2[option]
 Metrics_Calc(data2)
 s1, s2 = st.columns(2)
 with s1:
-    st.header('Economic Returns')
+    st.subheader('Economic Returns')
     space(1)
     Chart(data1,option)
 
 with s2:
-    st.header('Conversion Cycle')
+    st.subheader('Conversion Cycle')
     space(1)
     Chart(Visual_Metrics(data2),option)
