@@ -71,10 +71,11 @@ df_dict2 = dict()
 for file in csvfiles2:
     df_dict2[file.split('/')[2].split('.')[0]] = load_fdata(file)
 
-
-option = st.selectbox(
-     'Choose one company to visualize',
-     Companies)
+with st.sidebar:
+    st.subheader("Configure the plot")
+    option = st.selectbox(
+         'Choose one company to visualize',
+         Companies)
 data1 = df_dict1[option]
 data2 = df_dict2[option]
 Metrics_Calc(data2)
