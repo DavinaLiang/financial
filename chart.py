@@ -17,10 +17,10 @@ def space(num_lines=1):
 st.set_page_config(layout="wide",page_icon="💰",page_title="How Finance Works")
 #add a title
 st.image('header.png')
-st.title('Financial Analysis')
+#st.title('Financial Analysis')
 space(1)
 
-st.markdown('### Visualizing historical key factors of the corpartion helps us to understand how are the companies doing overtime, what is their overall market power towards their clients and service providers, and have a sense of their financial stories ')
+st.markdown('#### Visualizing historical key factors of the corpartion helps us to understand how are the companies doing overtime, what is their overall market power towards their clients and service providers, and have a sense of their financial stories ')
 space(2)
 ###############data preparation
 DATE_COLUMN = 'Date'
