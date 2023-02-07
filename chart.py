@@ -16,7 +16,7 @@ def space(num_lines=1):
 
 st.set_page_config(layout="wide",page_icon="💰",page_title="How Finance Works")
 #add a title
-st.image('header.png')
+st.image('header2.png')
 #st.title('Financial Analysis')
 space(1)
 
