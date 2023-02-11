@@ -24,7 +24,7 @@ st.markdown('#### Visualizing historical key factors of the corpartion helps us 
 space(2)
 ###############data preparation
 DATE_COLUMN = 'Date'
-Companies = ['Xiaomi','Viva BioTech']
+Companies = ['Xiaomi','Viva BioTech','歌尔股份(亿)']
 
 
 #effortless caching: relieve long-running computation in your code for continuously updating
