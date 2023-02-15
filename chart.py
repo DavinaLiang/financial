@@ -7,6 +7,7 @@ import glob, os
 import altair as alt
 from io import BytesIO
 import matplotlib.dates as mpl_dates
+import yfinance as yf
 
 
 #space function to control layout
@@ -15,6 +16,7 @@ def space(num_lines=1):
         st.write("")
 
 st.set_page_config(layout="wide",page_icon="💰",page_title="How Finance Works")
+
 #add a title
 st.image('header2.jpeg')
 #st.title('Financial Analysis')
@@ -25,12 +27,20 @@ space(2)
 ###############data preparation
 DATE_COLUMN = 'Date'
 Companies = ['小米(Xiaomi)','维亚生物(Viva BioTech)','歌尔股份(GoerTek)','信利国际']
+ticker = {
+              '小米(Xiaomi)':'1810.HK',
+              '维亚生物(Viva BioTech)':'1873.HK',
+              '歌尔股份(GoerTek)':'002241.SZ',
+              '信利国际':'0732.HK'
+              }
+
 cap = {
               '小米(Xiaomi)':'324.95B HKD',
               '维亚生物(Viva BioTech)':'3.25B HKD',
               '歌尔股份(GoerTek)':'78.18B CNY',
               '信利国际':'4.26B HKD'
               }
+
 
 
 #effortless caching: relieve long-running computation in your code for continuously updating
@@ -121,8 +131,17 @@ with st.sidebar:
     option = st.selectbox(
          'Choose one company to visualize',
          Companies)
-    st.balloons()
     st.metric("MARKET CAP", cap[option])
+    start_date = st.slider(
+    "Choose date to start",
+    value=datetime(2022, 1, 1),
+    format="MM/DD/YY")
+    st.write("Start date:", start_date)
+    stock_data = yf.Ticker(ticker[option])
+    #get historical data for searched ticker
+    stock_df = stock_data.history(period='1y', start=start_date, end=None)
+    #print line chart with daily closing prices for searched ticker
+    st.line_chart(stock_df.Close)
 
 
 data1 = df_dict1[option]
