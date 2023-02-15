@@ -24,22 +24,28 @@ st.markdown('#### Visualizing historical key factors of the corpartion helps us 
 space(2)
 ###############data preparation
 DATE_COLUMN = 'Date'
-Companies = ['小米','维亚生物','歌尔股份','信利国际']
+Companies = ['小米(Xiaomi)','维亚生物(Viva BioTech)','歌尔股份(GoerTek)','信利国际']
+cap = {
+              '小米(Xiaomi)':'324.95B HKD',
+              '维亚生物(Viva BioTech)':'3.25B HKD',
+              '歌尔股份(GoerTek)':'78.18B CNY',
+              '信利国际':'4.26B HKD'
+              }
 
 
 #effortless caching: relieve long-running computation in your code for continuously updating
 @st.cache(allow_output_mutation=True)
 def load_fdata(data):
     data = pd.read_csv(data)
-    data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
+    data.index = pd.to_datetime(data['Date'], format='%Y-%m-%d').dt.year
     data.set_index("Date",inplace=True)
     return data
 
 def Metrics_Calc(data):
-  data['Days Sales Out.']=(data['A/R']/data['Revenue'])*365
-  data['Days Inventory Out.']=(data['Inventory']/data['COGS'])*365
-  data['Days Payable Out.']=(data['A/P']/data['COGS'])*365
-  data['Cash Conversion Cycle']=data['Days Sales Out.']+data['Days Inventory Out.']-data['Days Payable Out.']
+  data['Days Sales Out']=(data['A/R']/data['Revenue'])*365
+  data['Days Inventory Out']=(data['Inventory']/data['COGS'])*365
+  data['Days Payable Out']=(data['A/P']/data['COGS'])*365
+  data['Cash Conversion Cycle']=data['Days Sales Out']+data['Days Inventory Out']-data['Days Payable Out']
 
 space(2)
 
@@ -50,8 +56,47 @@ def Chart(data,title):
   plt.xticks(rotation=45, ha='right')
   plt.axhline(0, ls='--', linewidth=2, color='red')
 
+def get_chart(data,unit):
+    hover = alt.selection_single(
+        fields=["Date"],
+        nearest=True,
+        on="mouseover",
+        empty="none",
+    )
+    names=data.columns.tolist()
+    lines = (
+        alt.Chart(data.reset_index()).transform_fold(
+        names).mark_line().encode(
+            alt.X('Date:T',title="Date",axis=alt.Axis(tickCount="year",format="%Y")),
+            alt.Y('value:Q',title=unit),
+            color='key:N',
+        )
+    )
+
+    # Draw points on the line, and highlight based on selection
+    points = lines.transform_filter(hover).mark_circle(size=65)
+
+    # Draw a rule at the location of the selection
+    tooltips = (
+        alt.Chart(data)
+        .mark_rule()
+        .encode(
+            x='Date:T',
+            y='value:Q',
+            opacity=alt.condition(hover, alt.value(0.3), alt.value(0)),
+            tooltip=[
+                alt.Tooltip('Date:T', title="Date"),
+                alt.Tooltip('value:Q', title=unit),
+            ],
+        )
+        .add_selection(hover)
+    )
+    return (lines + points + tooltips).interactive()
+
+
+
 def Visual_Metrics(data):
-  visual_metrics = data[['Days Sales Out.','Days Inventory Out.','Days Payable Out.','Cash Conversion Cycle']]
+  visual_metrics = data[['Days Sales Out','Days Inventory Out','Days Payable Out','Cash Conversion Cycle']]
   return visual_metrics
 
 ##########Visualizing stock price1
@@ -76,16 +121,30 @@ with st.sidebar:
     option = st.selectbox(
          'Choose one company to visualize',
          Companies)
+    st.balloons()
+    st.metric("MARKET CAP", cap[option])
+
+
 data1 = df_dict1[option]
 data2 = df_dict2[option]
 Metrics_Calc(data2)
-s1, s2 = st.columns(2)
-with s1:
+
+tab1, tab2 = st.tabs(["Chart", "Table"])
+with tab1:
     st.subheader('Economic Returns')
     space(1)
-    Chart(data1,option)
+    c1 = get_chart(data1,"Amount(0.1b)")
+    st.altair_chart(c1.interactive(), use_container_width=True)
 
-with s2:
+with tab2:
+    st.dataframe(data1)
+
+tab3, tab4 = st.tabs(["Chart", "Table"])
+
+with tab3:
     st.subheader('Conversion Cycle')
     space(1)
-    Chart(Visual_Metrics(data2),option)
+    c2 = get_chart(Visual_Metrics(data2),"Days")
+    st.altair_chart(c2.interactive(), use_container_width=True)
+with tab4:
+    st.dataframe(data2)
