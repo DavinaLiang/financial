@@ -106,12 +106,33 @@ def get_chart(data,unit):
 def bar_chart(data,unit):
     names=data.columns.tolist()
 
-    alt.Chart(data).mark_bar().encode(
-    alt.X('Date:T',title="Date",axis=alt.Axis(tickCount="year",format="%Y")),
-    alt.Y('value:Q',title=unit),
-    color='key:N',
-)
+    lines = (
+        alt.Chart(data).mark_bar().encode(
+        alt.X('Date:T',title="Date",axis=alt.Axis(tickCount="year",format="%Y")),
+        alt.Y('value:Q',title=unit),
+        color='key:N',
+        )
+    )
+    # Draw points on the line, and highlight based on selection
+    points = lines.transform_filter(hover).mark_circle(size=65)
 
+    # Draw a rule at the location of the selection
+    tooltips = (
+        alt.Chart(data)
+        .mark_rule()
+        .encode(
+            x='Date:T',
+            y='value:Q',
+            opacity=alt.condition(hover, alt.value(0.3), alt.value(0)),
+            tooltip=[
+                alt.Tooltip('Date:T', title="Date"),
+                alt.Tooltip('value:Q', title=unit),
+            ],
+        )
+        .add_selection(hover)
+    )
+    return (lines + points + tooltips).interactive()
+    
 def Visual_Metrics(data):
   visual_metrics = data[['Days Sales Out','Days Inventory Out','Days Payable Out','Cash Conversion Cycle']]
   return visual_metrics
