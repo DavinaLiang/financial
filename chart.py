@@ -122,6 +122,7 @@ def Visual_Metrics(data):
 
 mydir1 = "data/chart1"
 mydir2 = "data/chart2"
+mydir3 = "data/chart3"
 
 csvfiles1 = glob.glob(os.path.join(mydir1, '*.csv'))
 df_dict1 = dict()
@@ -133,6 +134,11 @@ df_dict2 = dict()
 for file in csvfiles2:
     df_dict2[file.split('/')[2].split('.')[0]] = load_fdata(file)
 
+csvfiles3 = glob.glob(os.path.join(mydir3, '*.csv'))
+df_dict3 = dict()
+for file in csvfiles3:
+    df_dict3[file.split('/')[2].split('.')[0]] = load_fdata(file)
+    
 with st.sidebar:
     st.subheader("Configure the plot")
     option = st.selectbox(
@@ -153,6 +159,7 @@ with st.sidebar:
 
 data1 = df_dict1[option]
 data2 = df_dict2[option]
+data3 = df_dict3[option]
 Metrics_Calc(data2)
 
 tab1, tab2 = st.tabs(["Chart", "Table"])
