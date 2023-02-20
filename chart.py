@@ -118,8 +118,6 @@ def bar_chart(data,unit):
         color='key:N',
         )
     )
-    # Draw points on the line, and highlight based on selection
-    points = lines.transform_filter(hover).mark_circle(size=65)
 
     # Draw a rule at the location of the selection
     tooltips = (
@@ -136,7 +134,7 @@ def bar_chart(data,unit):
         )
         .add_selection(hover)
     )
-    return (lines + points + tooltips).interactive()
+    return (lines + tooltips).interactive()
 
 def Visual_Metrics(data):
   visual_metrics = data[['Days Sales Out','Days Inventory Out','Days Payable Out','Cash Conversion Cycle']]
