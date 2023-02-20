@@ -106,11 +106,11 @@ def get_chart(data,unit):
 def bar_chart(data,unit):
     #names=data.columns.tolist()
     bars = (
-        alt.Chart(data).mark_bar().encode(
-        alt.X('Date:T',title="Date",axis=alt.Axis(tickCount="year",format="%Y")),
-        alt.Y('value:Q',title=unit),
-        color='key:N',
-        tooltip=['key', 'value'],
+        alt.Chart(data.melt('DATE', var_name='KEY', value_name='VALUE')).mark_bar().encode(
+        alt.X('Date:0',title="Date",axis=alt.Axis(tickCount="year",format="%Y")),
+        alt.Y('VALUE',title=unit),
+        color='KEY',
+        tooltip=['KEY', 'VALUE'],
         )
     )
     return bars.interactive()
