@@ -190,4 +190,4 @@ with tab4:
     st.subheader("Percentage of Revenue")
     space(1)
     c4 = bar_chart(data3[["% COGS","% Gross Profit","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]],"%")
-    st.altair_chart(c4)
+    st.altair_chart(c4.interactive(), use_container_width=True)
