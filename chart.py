@@ -103,7 +103,7 @@ def get_chart(data,unit):
     )
     return (lines + points + tooltips).interactive()
 
-def bar_chart(data,title):
+def bar_chart(data,unit):
     names=data.columns.tolist()
 
     alt.Chart(data).mark_bar().encode(
@@ -116,9 +116,8 @@ def Visual_Metrics(data):
   visual_metrics = data[['Days Sales Out','Days Inventory Out','Days Payable Out','Cash Conversion Cycle']]
   return visual_metrics
 
-##########Visualizing stock price1
+##########Visualizing stock price
 #Load data from csv files
-
 
 mydir1 = "data/chart1"
 mydir2 = "data/chart2"
@@ -138,7 +137,7 @@ csvfiles3 = glob.glob(os.path.join(mydir3, '*.csv'))
 df_dict3 = dict()
 for file in csvfiles3:
     df_dict3[file.split('/')[2].split('.')[0]] = load_fdata(file)
-    
+
 with st.sidebar:
     st.subheader("Configure the plot")
     option = st.selectbox(
@@ -190,5 +189,5 @@ with tab3:
 with tab4:
     st.subheader("Percentage of Revenue")
     space(1)
-    c4 = bar_chart(data3[["% COGS","% Gross Profit","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]],"Amount(0.1b)")
+    c4 = bar_chart(data3[["% COGS","% Gross Profit","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]],"%")
     st.altair_chart(c4)
