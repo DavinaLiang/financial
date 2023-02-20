@@ -103,7 +103,14 @@ def get_chart(data,unit):
     )
     return (lines + points + tooltips).interactive()
 
+def bar_chart(data,title):
+    names=data.columns.tolist()
 
+    alt.Chart(data).mark_bar().encode(
+    alt.X('Date:T',title="Date",axis=alt.Axis(tickCount="year",format="%Y")),
+    alt.Y('value:Q',title=unit),
+    color='key:N',
+)
 
 def Visual_Metrics(data):
   visual_metrics = data[['Days Sales Out','Days Inventory Out','Days Payable Out','Cash Conversion Cycle']]
@@ -158,12 +165,23 @@ with tab1:
 with tab2:
     st.dataframe(data1)
 
-tab3, tab4 = st.tabs(["Chart", "Table"])
-
-with tab3:
+tab5, tab6 = st.tabs(["Chart", "Table"])
+with tab5:
     st.subheader('Conversion Cycle')
     space(1)
     c2 = get_chart(Visual_Metrics(data2),"Days")
     st.altair_chart(c2.interactive(), use_container_width=True)
-with tab4:
+with tab6:
     st.dataframe(data2)
+
+tab3,tab4 = st.tabs(["Overview", "Financial Ratios"])
+with tab3:
+    st.subheader("Overall Operation Conditions")
+    space(1)
+    c3 = get_chart(data3[["Revenue","COGS","Gross Profit","Net Income"]],"Amount(0.1b)")
+    st.altair_chart(c3.interactive(), use_container_width=True)
+with tab4:
+    st.subheader("Percentage of Revenue")
+    space(1)
+    c4 = bar_chart(data3[["% COGS","% Gross Profit","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]],"Amount(0.1b)")
+    st.altair_chart(c4)
