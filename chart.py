@@ -104,8 +104,13 @@ def get_chart(data,unit):
     return (lines + points + tooltips).interactive()
 
 def bar_chart(data,unit):
+    hover = alt.selection_single(
+        fields=["Date"],
+        nearest=True,
+        on="mouseover",
+        empty="none",
+    )
     names=data.columns.tolist()
-
     lines = (
         alt.Chart(data).mark_bar().encode(
         alt.X('Date:T',title="Date",axis=alt.Axis(tickCount="year",format="%Y")),
@@ -132,7 +137,7 @@ def bar_chart(data,unit):
         .add_selection(hover)
     )
     return (lines + points + tooltips).interactive()
-    
+
 def Visual_Metrics(data):
   visual_metrics = data[['Days Sales Out','Days Inventory Out','Days Payable Out','Cash Conversion Cycle']]
   return visual_metrics
