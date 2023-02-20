@@ -104,36 +104,16 @@ def get_chart(data,unit):
     return (lines + points + tooltips).interactive()
 
 def bar_chart(data,unit):
-    hover = alt.selection_single(
-        fields=["Date"],
-        nearest=True,
-        on="mouseover",
-        empty="none",
-    )
-    names=data.columns.tolist()
-    lines = (
+    #names=data.columns.tolist()
+    bars = (
         alt.Chart(data).mark_bar().encode(
         alt.X('Date:T',title="Date",axis=alt.Axis(tickCount="year",format="%Y")),
         alt.Y('value:Q',title=unit),
         color='key:N',
+        tooltip=['key', 'value'],
         )
     )
-    # Draw a rule at the location of the selection
-    tooltips = (
-        alt.Chart(data)
-        .mark_rule()
-        .encode(
-            x='Date:T',
-            y='value:Q',
-            opacity=alt.condition(hover, alt.value(0.3), alt.value(0)),
-            tooltip=[
-                alt.Tooltip('Date:T', title="Date"),
-                alt.Tooltip('value:Q', title=unit),
-            ],
-        )
-        .add_selection(hover)
-    )
-    return (lines + tooltips).interactive()
+    return bars.interactive()
 
 def Visual_Metrics(data):
   visual_metrics = data[['Days Sales Out','Days Inventory Out','Days Payable Out','Cash Conversion Cycle']]
@@ -213,5 +193,5 @@ with tab4:
     st.write(data3[["% COGS","% Gross Profit","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]])
     st.subheader("Percentage of Revenue")
     space(1)
-    c4 = bar_chart(data3[["% COGS","% Gross Profit","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]],"%")
+    c4 = bar_chart(data3[["% COGS","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]],"%")
     st.altair_chart(c4.interactive(), use_container_width=True)
