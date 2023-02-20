@@ -118,7 +118,6 @@ def bar_chart(data,unit):
         color='key:N',
         )
     )
-
     # Draw a rule at the location of the selection
     tooltips = (
         alt.Chart(data)
@@ -211,7 +210,7 @@ with tab3:
     c3 = get_chart(data3[["Revenue","COGS","Gross Profit","Net Income"]],"Amount(0.1b)")
     st.altair_chart(c3.interactive(), use_container_width=True)
 with tab4:
-    st.write(data3)
+    st.write(data3[["% COGS","% Gross Profit","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]])
     st.subheader("Percentage of Revenue")
     space(1)
     c4 = bar_chart(data3[["% COGS","% Gross Profit","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]],"%")
