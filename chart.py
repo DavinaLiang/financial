@@ -189,8 +189,8 @@ with tab3:
     c3 = get_chart(data3[["Revenue","COGS","Gross Profit","Net Income"]],"Amount(0.1b)")
     st.altair_chart(c3.interactive(), use_container_width=True)
 with tab4:
-    st.write(data3[["% COGS","% Gross Profit","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]])
     st.subheader("Percentage of Revenue")
     space(1)
-    st.bar_chart(data3[["% COGS","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]])
+    df = data3[["% COGS","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]]
+    st.bar_chart(df)
     #st.altair_chart(c4.interactive(), use_container_width=True)
