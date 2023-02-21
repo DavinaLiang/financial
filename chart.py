@@ -103,14 +103,13 @@ def get_chart(data,unit):
     )
     return (lines + points + tooltips).interactive()
 
-def bar_chart(data,unit):
+def bar(data,unit):
     #names=data.columns.tolist()
     bars = (
-        alt.Chart(data.melt('Date', var_name='KEY', value_name='VALUE')).mark_bar().encode(
-        alt.X('Date:0',title="Date",axis=alt.Axis(tickCount="year",format="%Y")),
-        alt.Y('VALUE',title=unit),
-        color='KEY',
-        tooltip=['KEY', 'VALUE'],
+        alt.Chart(data).mark_bar().encode(
+        alt.X('Date:T',title="Date",axis=alt.Axis(tickCount="year",format="%Y")),
+        alt.Y('value:Q',title=unit),
+        color='Key:N',
         )
     )
     return bars.interactive()
@@ -193,5 +192,5 @@ with tab4:
     st.write(data3[["% COGS","% Gross Profit","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]])
     st.subheader("Percentage of Revenue")
     space(1)
-    c4 = bar_chart(data3[["% COGS","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]],"%")
-    st.altair_chart(c4.interactive(), use_container_width=True)
+    st.bar_chart(data3[["% COGS","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]])
+    #st.altair_chart(c4.interactive(), use_container_width=True)
