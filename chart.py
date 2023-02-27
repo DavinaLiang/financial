@@ -26,7 +26,7 @@ st.markdown('#### Visualizing historical key factors of the corpartion helps us 
 space(2)
 ###############data preparation
 DATE_COLUMN = 'Date'
-Companies = ['小米(Xiaomi)','旭辉控股(CIFI Holdings)','维亚生物(Viva BioTech)','歌尔股份(GoerTek)','信利国际']
+Companies = ['小米(Xiaomi)','维亚生物(Viva BioTech)','歌尔股份(GoerTek)','信利国际','旭辉控股(CIFI Holdings)']
 ticker = {
               '小米(Xiaomi)':'1810.HK',
               '维亚生物(Viva BioTech)':'1873.HK',
