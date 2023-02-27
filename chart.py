@@ -32,7 +32,7 @@ ticker = {
               '维亚生物(Viva BioTech)':'1873.HK',
               '歌尔股份(GoerTek)':'002241.SZ',
               '信利国际':'0732.HK',
-              '旭辉国际(CIFI Holdings)':'0884.HK'
+              '旭辉控股(CIFI Holdings)':'0884.HK'
               }
 
 cap = {
@@ -40,7 +40,7 @@ cap = {
               '维亚生物(Viva BioTech)':'3.25B HKD',
               '歌尔股份(GoerTek)':'78.18B CNY',
               '信利国际':'4.26B HKD',
-              '旭辉国际(CIFI Holdings)':'10.62B HKD'
+              '旭辉控股(CIFI Holdings)':'10.62B HKD'
               }
 
 
