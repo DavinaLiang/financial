@@ -90,7 +90,7 @@ def get_chart(data,unit):
     )
 
     # Draw points on the line, and highlight based on selection
-    points = lines.transform_filter(hover).mark_circle(size=65)
+    points = lines.mark_circle(size=60)
 
     # Draw a rule at the location of the selection
     tooltips = (
@@ -107,7 +107,13 @@ def get_chart(data,unit):
         )
         .add_selection(hover)
     )
-    return (lines + points + tooltips).interactive()
+
+    rule = alt.Chart(pd.DataFrame({'y': [0]})).mark_rule(color='black',strokeDash=[5, 5]).encode(
+    y='y')
+     # Set the dash style
+
+
+    return (lines + points + tooltips + rule).interactive()
 
 def bar(data,unit):
     #names=data.columns.tolist()
@@ -174,7 +180,7 @@ with tab1:
     st.subheader('Economic Returns')
     space(1)
     c1 = get_chart(data1,"Amount(0.1b)")
-    st.altair_chart(c1.interactive(), use_container_width=True)
+    st.altair_chart(c1, use_container_width=True)
 
 with tab2:
     st.dataframe(data1)
@@ -184,7 +190,7 @@ with tab5:
     st.subheader('Conversion Cycle')
     space(1)
     c2 = get_chart(Visual_Metrics(data2),"Days")
-    st.altair_chart(c2.interactive(), use_container_width=True)
+    st.altair_chart(c2, use_container_width=True)
 with tab6:
     st.dataframe(data2)
 
@@ -193,7 +199,7 @@ with tab3:
     st.subheader("Overall Operation Conditions")
     space(1)
     c3 = get_chart(data3[["Revenue","COGS","Gross Profit","Net Income"]],"Amount(0.1b)")
-    st.altair_chart(c3.interactive(), use_container_width=True)
+    st.altair_chart(c3, use_container_width=True)
 with tab4:
     st.subheader("Percentage of Revenue")
     space(1)
