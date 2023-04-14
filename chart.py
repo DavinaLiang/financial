@@ -8,6 +8,7 @@ import altair as alt
 from io import BytesIO
 import matplotlib.dates as mpl_dates
 import yfinance as yf
+from pandas_datareader import data
 
 
 #space function to control layout
@@ -62,6 +63,19 @@ def Metrics_Calc(data):
   data['Days Inventory Out']=(data['Inventory']/data['COGS'])*365
   data['Days Payable Out']=(data['A/P']/data['COGS'])*365
   data['Cash Conversion Cycle']=data['Days Sales Out']+data['Days Inventory Out']-data['Days Payable Out']
+
+def Ratio_Calc(data):
+    data['Current assets/Current liabilities']=data['Current Asset']/data['Current Liabilities']
+    data['Cash, maketable securities, and accounts receivable/ Current liabilities']=(data['Current Asset']-data['Inventory'])/data['Current Liabilities']
+    data['Total debt/Total assets']=data['Long-term Debt']/data['Total Assets']
+    data['Long-term debt/ Capitalization']=data['Long-term Debt']/(data['Shareholders\' Equity']+data['Long-term Debt'])
+    data['Revenue/Total Assets']=data['Revenue']/data['Total Assets']
+    data['Net Profit/Total Assets']=data['Net Income']/data['Total Assets']
+    data['Total assets/ Shareholders\' equity']=data['Total Assets']/data['Shareholders\' Equity']
+    data['Net Profit/ Shareholders\' equity']=data['Net Income']/data['Shareholders\' Equity']
+    data['EBIT/ Interest Expense']=data['EBIT']/data['Interest Expense']
+    data['EBITDA/ Revenue']=(data['EBIT']+data['D&A'])/data['Revenue']
+
 
 space(2)
 
@@ -136,6 +150,7 @@ def Visual_Metrics(data):
 mydir1 = "data/chart1"
 mydir2 = "data/chart2"
 mydir3 = "data/chart3"
+mydir4 = "data/Ratios"
 
 csvfiles1 = glob.glob(os.path.join(mydir1, '*.csv'))
 df_dict1 = dict()
@@ -152,12 +167,18 @@ df_dict3 = dict()
 for file in csvfiles3:
     df_dict3[file.split('/')[2].split('.')[0]] = load_fdata(file)
 
+csvfiles4 = glob.glob(os.path.join(mydir4, '*.csv'))
+df_dict4 = dict()
+for file in csvfiles4:
+    df_dict4[file.split('/')[2].split('.')[0]] = load_fdata(file)
+
 with st.sidebar:
     st.subheader("Configure the plot")
     option = st.selectbox(
          'Choose one company to visualize',
          Companies)
-    st.metric("MARKET CAP", cap[option])
+    market_cap = str(round(int(data.get_quote_yahoo(ticker[option])['marketCap'])/100000000,2))+"亿"
+    st.metric("MARKET CAP", market_cap)
     start_date = st.slider(
     "Choose date to start",
     value=datetime(2022, 1, 1),
@@ -173,13 +194,19 @@ with st.sidebar:
 data1 = df_dict1[option]
 data2 = df_dict2[option]
 data3 = df_dict3[option]
+data4 = df_dict4[option]
 Metrics_Calc(data2)
+Ratio_Calc(data4)
+
+st.subheader('Financial Ratios')
+st.dataframe(data4.transpose().style.format("{:.2f}").highlight_max(axis=1))
+space(1)
 
 tab1, tab2 = st.tabs(["Chart", "Table"])
 with tab1:
     st.subheader('Economic Returns')
     space(1)
-    c1 = get_chart(data1,"Amount(0.1b)")
+    c1 = get_chart(data1,"Amount(亿)")
     st.altair_chart(c1, use_container_width=True)
 
 with tab2:
@@ -194,15 +221,15 @@ with tab5:
 with tab6:
     st.dataframe(data2)
 
-tab3,tab4 = st.tabs(["Overview", "Financial Ratios"])
+tab3,tab4 = st.tabs(["Overview", "Operational Components"])
 with tab3:
     st.subheader("Overall Operation Conditions")
     space(1)
-    c3 = get_chart(data3[["Revenue","COGS","Gross Profit","Net Income"]],"Amount(0.1b)")
+    c3 = get_chart(data3[["Revenue","COGS","Gross Profit","Net Income"]],"Amount(亿)")
     st.altair_chart(c3, use_container_width=True)
 with tab4:
     st.subheader("Percentage of Revenue")
     space(1)
     df = data3[["% COGS","% Selling & Promotion Expenses","% Administrative Expenses","% Research & Development Expenses","% Net Income"]]
     st.bar_chart(df)
-    #st.altair_chart(c4.interactive(), use_container_width=True)
+    #st.altair_chart(c4.interactive(), use_container_width=True
