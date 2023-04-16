@@ -27,25 +27,13 @@ st.markdown('#### Visualizing historical key factors of the corpartion helps us 
 space(2)
 ###############data preparation
 DATE_COLUMN = 'Date'
-Companies = ['小米(Xiaomi)','维亚生物(Viva BioTech)','歌尔股份(GoerTek)','信利国际','旭辉控股(CIFI Holdings)','吉利汽车(Geely)','富力地产']
+Companies = ['小米(Xiaomi)','信利国际','旭辉控股(CIFI Holdings)','吉利汽车(Geely)','富力地产']
 ticker = {
               '小米(Xiaomi)':'1810.HK',
-              '维亚生物(Viva BioTech)':'1873.HK',
-              '歌尔股份(GoerTek)':'002241.SZ',
               '信利国际':'0732.HK',
               '旭辉控股(CIFI Holdings)':'0884.HK',
               '吉利汽车(Geely)':'0175.HK',
               '富力地产':'2777.HK'
-              }
-
-cap = {
-              '小米(Xiaomi)':'324.95B HKD',
-              '维亚生物(Viva BioTech)':'3.25B HKD',
-              '歌尔股份(GoerTek)':'78.18B CNY',
-              '信利国际':'4.26B HKD',
-              '旭辉控股(CIFI Holdings)':'10.62B HKD',
-              '吉利汽车(Geely)':'106.60B HKD',
-              '富力地产':'6.00B HKD'
               }
 
 
