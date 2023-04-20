@@ -165,8 +165,8 @@ with st.sidebar:
     option = st.selectbox(
          'Choose one company to visualize',
          Companies)
-    market_cap = str(round(int(data.get_quote_yahoo(ticker[option])['marketCap'])/100000000,2))+"亿"
-    st.metric("MARKET CAP", market_cap)
+    #market_cap = str(round(int(data.get_quote_yahoo(ticker[option])['marketCap'])/100000000,2))+"亿"
+    #st.metric("MARKET CAP", market_cap)
     start_date = st.slider(
     "Choose date to start",
     value=datetime(2022, 1, 1),
