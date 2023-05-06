@@ -41,7 +41,7 @@ ticker = {
 
 
 #effortless caching: relieve long-running computation in your code for continuously updating
-@st.cache_resource
+@st.cache(allow_output_mutation=True)
 def load_fdata(data):
     data = pd.read_csv(data)
     data.index = pd.to_datetime(data['Date'], format='%Y-%m-%d').dt.year
