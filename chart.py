@@ -27,13 +27,14 @@ st.markdown('#### Visualizing historical key factors of the corpartion helps us 
 space(2)
 ###############data preparation
 DATE_COLUMN = 'Date'
-Companies = ['小米(Xiaomi)','信利国际','旭辉控股(CIFI Holdings)','吉利汽车(Geely)','富力地产']
+Companies = ['小米(Xiaomi)','信利国际','旭辉控股(CIFI Holdings)','吉利汽车(Geely)','富力地产','东风集团']
 ticker = {
               '小米(Xiaomi)':'1810.HK',
               '信利国际':'0732.HK',
               '旭辉控股(CIFI Holdings)':'0884.HK',
               '吉利汽车(Geely)':'0175.HK',
-              '富力地产':'2777.HK'
+              '富力地产':'2777.HK',
+              '东风集团':'0489.HK'
               }
 
 
@@ -165,8 +166,8 @@ with st.sidebar:
     option = st.selectbox(
          'Choose one company to visualize',
          Companies)
-    #market_cap = str(round(int(data.get_quote_yahoo(ticker[option])['marketCap'])/100000000,2))+"亿"
-    #st.metric("MARKET CAP", market_cap)
+    market_cap = str(round(int(data.get_quote_yahoo(ticker[option])['marketCap'])/100000000,2))+"亿"
+    st.metric("MARKET CAP", market_cap)
     start_date = st.slider(
     "Choose date to start",
     value=datetime(2022, 1, 1),
