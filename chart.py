@@ -7,8 +7,9 @@ import glob, os
 import altair as alt
 from io import BytesIO
 import matplotlib.dates as mpl_dates
+from pandas_datareader import data as pdr
 import yfinance as yf
-from pandas_datareader import data
+yf.pdr_override()
 
 
 #space function to control layout
@@ -40,7 +41,7 @@ ticker = {
 
 
 #effortless caching: relieve long-running computation in your code for continuously updating
-@st.cache(allow_output_mutation=True)
+@st.cache_data
 def load_fdata(data):
     data = pd.read_csv(data)
     data.index = pd.to_datetime(data['Date'], format='%Y-%m-%d').dt.year
@@ -166,11 +167,11 @@ with st.sidebar:
     option = st.selectbox(
          'Choose one company to visualize',
          Companies)
-    market_cap = str(round(int(data.get_quote_yahoo(ticker[option])['marketCap'])/100000000,2))+"亿"
-    st.metric("MARKET CAP", market_cap)
+    #market_cap = str(round(int(pdr.get_quote_yahoo(ticker[option])['marketCap'])/100000000,2))+"亿"
+    #st.metric("MARKET CAP", market_cap)
     start_date = st.slider(
     "Choose date to start",
-    value=datetime(2022, 1, 1),
+    value=datetime(2018, 1, 1),
     format="MM/DD/YY")
     st.write("Start date:", start_date)
     stock_data = yf.Ticker(ticker[option])
