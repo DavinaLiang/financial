@@ -27,14 +27,14 @@ st.markdown('#### Visualizing historical key factors of the corpartion helps us 
 space(2)
 ###############data preparation
 DATE_COLUMN = 'Date'
-Companies = ['小米(Xiaomi)','信利国际','旭辉控股(CIFI Holdings)','吉利汽车(Geely)','富力地产','东风集团']
+Companies = ['小米(Xiaomi)','信利国际','旭辉控股(CIFI Holdings)','吉利汽车(Geely)','富力地产']
 ticker = {
               '小米(Xiaomi)':'1810.HK',
               '信利国际':'0732.HK',
               '旭辉控股(CIFI Holdings)':'0884.HK',
               '吉利汽车(Geely)':'0175.HK',
-              '富力地产':'2777.HK',
-              '东风集团':'0489.HK'
+              '富力地产':'2777.HK'
+              
               }
 
 
