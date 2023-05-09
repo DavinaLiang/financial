@@ -41,7 +41,7 @@ ticker = {
 @st.cache(allow_output_mutation=True)
 def load_fdata(data):
     data = pd.read_csv(data)
-    data.index = pd.to_datetime(data['Date'], format='%Y-%m-%d').dt.year
+    data.index = pd.to_datetime(data['Date'], format='%Y/%m/%d').dt.year
     data.set_index("Date",inplace=True)
     return data
 
